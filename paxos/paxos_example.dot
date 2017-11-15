@@ -1,0 +1,62 @@
+
+/*
+ * An instance of Basic Paxos algorithm
+ * Firstly install graphviz software on your host, and then run
+ *     dot -T png -o paxos_example.png paxos_example.dot
+ */
+
+digraph Root { 
+
+    compound = true;
+
+    //rankdir="LR";
+
+
+	subgraph cluster1 {
+        labelloc="t";
+        label="Prepare Phase";
+
+        A[label="A \n empty",shape=circle,style=filled,fillcolor=slateblue1];
+        B[label="B \n 2:p2",shape=circle,style=filled,fillcolor=orchid1];
+        C[label="C \n 3:p3",shape=circle,style=filled,fillcolor=slateblue1];
+        D[label="D \n 2:p2",shape=circle,style=filled,fillcolor=slateblue1];
+        E[label="E \n 1:p1",shape=circle,style=filled,fillcolor=grey];
+        style=dotted;
+        color=forestgreen;
+
+        B -> A [label="2:p2",fontcolor=orchid1];
+        B -> C [label="2:p2",fontcolor=orchid1];
+        B -> D [label="2:p2",fontcolor=orchid1];
+        B -> E [label="2:p2",fontcolor=orchid1];
+
+        A -> B [label="ok",fontcolor=green,color=orange];
+        C -> B [label="3:p3",fontcolor=red,color=orange];
+        D -> B [label="ok",fontcolor=green,color=orange];
+        E -> B [label="unavailable",fontcolor=grey,color=orange,style=dashed];
+	}
+	
+	subgraph cluster2 {
+        labelloc="t";
+        label="Accept Phase";
+
+        A1[label="A \n 3:p3",shape=circle,style=filled,fillcolor=slateblue1];
+        B1[label="B \n 3:p3",shape=circle,style=filled,fillcolor=orchid1];
+        C1[label="C \n 3:p3",shape=circle,style=filled,fillcolor=slateblue1];
+        D1[label="D \n 2:p2",shape=circle,style=filled,fillcolor=grey];
+        E1[label="E \n 3:p3",shape=circle,style=filled,fillcolor=slateblue1];
+        style=dotted;
+        color=forestgreen;
+
+        B1 -> A1 [label="3:p3",fontcolor=orchid1];
+        B1 -> C1 [label="3:p3",fontcolor=orchid1];
+        B1 -> D1 [label="3:p3",fontcolor=orchid1];
+        B1 -> E1 [label="3:p3",fontcolor=orchid1];
+
+        A1 -> B1 [label="ok",fontcolor=green,color=orange];
+        C1 -> B1 [label="ok",fontcolor=green,color=orange];
+        D1 -> B1 [label="unavailable",fontcolor=grey,color=orange,style=dashed];
+        E1 -> B1 [label="ok",fontcolor=green,color=orange];
+	}
+	
+	A -> A1 [ltail=cluster1, lhead=cluster2];
+}
