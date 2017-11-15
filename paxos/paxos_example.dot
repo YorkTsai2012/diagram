@@ -1,4 +1,3 @@
-
 /*
  * An instance of Basic Paxos algorithm
  * Firstly install graphviz software on your host, and then run
@@ -27,12 +26,12 @@ digraph Root {
         B -> A [label="2:p2",fontcolor=orchid1];
         B -> C [label="2:p2",fontcolor=orchid1];
         B -> D [label="2:p2",fontcolor=orchid1];
-        B -> E [label="2:p2",fontcolor=orchid1];
+        B -> E [label="unavailable",fontcolor=grey,style=dashed];
 
         A -> B [label="ok",fontcolor=green,color=orange];
         C -> B [label="3:p3",fontcolor=red,color=orange];
         D -> B [label="ok",fontcolor=green,color=orange];
-        E -> B [label="unavailable",fontcolor=grey,color=orange,style=dashed];
+        //E -> B [label="unavailable",fontcolor=grey,color=orange,style=dashed];
 	}
 	
 	subgraph cluster2 {
@@ -53,10 +52,10 @@ digraph Root {
         B1 -> E1 [label="3:p3",fontcolor=orchid1];
 
         A1 -> B1 [label="ok",fontcolor=green,color=orange];
-        C1 -> B1 [label="ok",fontcolor=green,color=orange];
-        D1 -> B1 [label="unavailable",fontcolor=grey,color=orange,style=dashed];
+        C1 -> B1 [label="ignore",fontcolor=red,color=orange];
+        D1 -> B1 [label="timeout",fontcolor=grey,color=orange,style=dashed];
         E1 -> B1 [label="ok",fontcolor=green,color=orange];
 	}
 	
-	A -> A1 [ltail=cluster1, lhead=cluster2];
+	B -> B1 [ltail=cluster1, lhead=cluster2];
 }
